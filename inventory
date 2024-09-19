@@ -1,4 +1,7 @@
+[apt]
 lab-ansclient1
 lab-ansclient2
 lab-ansclient3
+
+[yum]
 lab-ansclient4
