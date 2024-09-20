@@ -1,0 +1,20 @@
+---
+
+- hosts: apt_servers
+  become: true
+  tasks:
+  - name: install yamllint apt servers
+    tags: yamllint,ubuntu
+    ansible.builtin.apt:
+      name:
+        - yamllint
+      state: latest
+        #    when: ansible_distribution == "Ubuntu" and ansible_distribution == "Debian"
+
+      #  - name: install yamllint dnf servers
+      #    tags: yamllint,fedora
+      #    ansible.builtin.dnf:
+      #      name:
+      #        - yamllint
+      #      state: latest
+      #      when: ansible_distribution == "Fedora"
