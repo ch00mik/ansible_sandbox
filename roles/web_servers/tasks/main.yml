@@ -1,38 +1,26 @@
 - name: install apache on web servers
-  tags: apache,ubuntu
-  ansible.builtin.apt:
+  tags: apache
+  ansible.builtin.package:
     name:
-      - apache2
-      - libapache2-mod-php
-    state: latest
-  when: ansible_distribution == ["Ubuntu", "Debian"]
+      - "{{ apache_package }}"
 
-- name: install apache on web servers (fedora)
-  tags: apache,fedora
-  ansible.builtin.dnf:
-    name: httpd
-    state: latest
-  when: ansible_distribution == "Fedora"
-
-- name: ensure apache is running (ubuntu / debian)
-  tags: apache,ubuntu
+- name: ensure apache is running
+  tags: apache
   ansible.builtin.service:
-    name: apache2
+    name: "{{ apache_service }}"
     state: started
-  when: ansible_distribution == ["Ubuntu", "Debian"]
 
-- name: ensure apache is running (fedora)
+- name: change email address for apache admin
   tags: apache,fedora
-  ansible.builtin.service:
-    name: httpd
-    state: started
+  ansible.builtin.lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: '^ServerAdmin'
+    line: ServerAdmin fedora3@example.com
   when: ansible_distribution == "Fedora"
+  register: fedapache
 
-- name: copy html file for site
-  tags: apache,ubuntu
-  ansible.builtin.copy:
-    src: default_site.html
-    dest: /var/www/html/index.html
-    owner: root
-    group: root
-    mode: 0644
+- name: restart apache
+  ansible.builtin.service:
+    name: "{{ apache_service }}"
+    state: restarted
+  when: fedapache.changed
