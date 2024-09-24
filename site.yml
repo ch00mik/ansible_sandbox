@@ -26,6 +26,7 @@
         - apache2
         - libapache2-mod-php
       state: latest
+    when: ansible_distribution == "Ubuntu" and ansible_distribution == "Debian"
 
   - name: install apache on web servers (fedora)
     tags: apache,fedora
@@ -33,7 +34,7 @@
       name: httpd
     when: ansible_distribution == "Fedora"
 
-  - name: ensure apache is running (ubuntu)
+  - name: ensure apache is running (ubuntu / debian)
     tags: apache,ubuntu
     ansible.builtin.service:
       name: apache2
@@ -52,7 +53,7 @@
     ansible.builtin.lineinfile:
       path: /etc/httpd/conf/httpd.conf
       regexp: '^ServerAdmin'
-      line: ServerAdmin fedora@somewhere.net
+      line: ServerAdmin fedora2@somewhere.net
     when: ansible_distribution == "Fedora"
     register: httpdadminemail
 
@@ -61,7 +62,7 @@
     ansible.builtin.service:
       name: httpd
       state: restarted
-    when: httpd.changed
+    when: httpdadminemail.changed 
 
   - name: copy html file for site
     tags: apache,ubuntu
