@@ -1,10 +1,10 @@
 [apt_servers]
-lab-ansclient1 apache_package=apache2 php_package=libapache2-mod-php 
-lab-ansclient2 apache_package=apache2 php_package=libapache2-mod-php
-lab-ansclient3 apache_package=apache2 php_package=libapache2-mod-php
+lab-ansclient1 
+lab-ansclient2
+lab-ansclient3
 
 [yum_servers]
-lab-ansclient4 apache_package=httpd php_package=php mysql_package=mariadb-server
+lab-ansclient4
 
 
 [web_servers]
@@ -14,8 +14,8 @@ lab-ansclient3
 lab-ansclient4
 
 [db_servers]
-lab-ansclient3 mysql_package=mysql-server 
-lab-ansclient4 mysql_package=mariadb-server 
+lab-ansclient3 
+lab-ansclient4 
 
 
 
