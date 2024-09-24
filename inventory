@@ -7,7 +7,7 @@ lab-ansclient3
 lab-ansclient4
 
 
-[web_servers]
+[apache]
 lab-ansclient1 
 lab-ansclient2
 lab-ansclient3
