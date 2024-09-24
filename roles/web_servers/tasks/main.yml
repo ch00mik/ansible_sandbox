@@ -15,12 +15,8 @@
   ansible.builtin.lineinfile:
     path: /etc/httpd/conf/httpd.conf
     regexp: '^ServerAdmin'
-    line: ServerAdmin fedora3@example.com
+    line: ServerAdmin fedora4@example.com
   when: ansible_distribution == "Fedora"
-  register: fedapache
+    #  register: fedapache
+  notify: restart_apache
 
-- name: restart apache
-  ansible.builtin.service:
-    name: "{{ apache_service }}"
-    state: restarted
-  when: fedapache.changed
