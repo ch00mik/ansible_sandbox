@@ -1,0 +1,20 @@
+- name: create user
+  tags: always,adduser
+  ansible.builtin.user:
+    name: ansible
+    groups: root
+
+- name: update permissions for ansible user sudoers file
+  tags: always
+  ansible.builtin.copy:
+    src: sudoer_ansible
+    dest: /etc/sudoers.d/ansible
+    owner: root
+    group: root
+    mode: '440'
+
+- name: add ssh key for user ansible
+  tags: always
+  ansible.builtin.authorized_key:
+    user: ansible
+    key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH921Ecf1RAgBx4T1e8nc0ZtTkAM3zylh8/XKud8B+m4 ccadmin@lab-ansible01"

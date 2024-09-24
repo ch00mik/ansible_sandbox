@@ -1,0 +1,38 @@
+- name: install apache on web servers
+  tags: apache,ubuntu
+  ansible.builtin.apt:
+    name:
+      - apache2
+      - libapache2-mod-php
+    state: latest
+  when: ansible_distribution == ["Ubuntu", "Debian"]
+
+- name: install apache on web servers (fedora)
+  tags: apache,fedora
+  ansible.builtin.dnf:
+    name: httpd
+    state: latest
+  when: ansible_distribution == "Fedora"
+
+- name: ensure apache is running (ubuntu / debian)
+  tags: apache,ubuntu
+  ansible.builtin.service:
+    name: apache2
+    state: started
+  when: ansible_distribution == ["Ubuntu", "Debian"]
+
+- name: ensure apache is running (fedora)
+  tags: apache,fedora
+  ansible.builtin.service:
+    name: httpd
+    state: started
+  when: ansible_distribution == "Fedora"
+
+- name: copy html file for site
+  tags: apache,ubuntu
+  ansible.builtin.copy:
+    src: default_site.html
+    dest: /var/www/html/index.html
+    owner: root
+    group: root
+    mode: 0644

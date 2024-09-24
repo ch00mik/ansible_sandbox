@@ -1,0 +1,11 @@
+- name: install mariadb package on db servers with fedora
+  ansible.builtin.dnf:
+    name: mariadb-server
+    state: latest
+  when: ansible_distribution == "Fedora"
+
+- name: install mysql server package on db servers with ubuntu/debian
+  ansible.builtin.apt:
+    name: mysql-server
+    state: latest
+  when: ansible_distribution == ["Ubuntu", "Debian"]
